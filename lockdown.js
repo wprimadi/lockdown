@@ -14,8 +14,8 @@
 
 // LOCKDOWN.js
 
-const lockdown = (function () {
-    let config = {
+const LOCKDOWN = (() => {
+    let options = {
       redirectUrl: '',
       disableContextMenu: true,
       disableShorcuts: true,
@@ -26,94 +26,118 @@ const lockdown = (function () {
       disableDevTools: true
     };
   
-    function activateForbidden() {
-      if (config.redirectUrl) {
-        window.location.href = config.redirectUrl;
-      } else {
-        console.warn('DevTools opened!');
+    function DevToolsOpened() {
+      if (options.redirectUrl) {
+        location.href = options.redirectUrl;
       }
     }
   
-    function detectDevTools() {
-      if (!config.disableDevTools) return;
-  
-      setInterval(() => {
-        const threshold = 160; // typical devtools width/height
-        const isDevToolsOpen = (
-          window.outerWidth - window.innerWidth > threshold ||
-          window.outerHeight - window.innerHeight > threshold
-        );
-  
-        if (isDevToolsOpen) {
-          activateForbidden();
-        }
-      }, 1000);
+    function blockContextMenu() {
+      document.addEventListener('contextmenu', function (event) {
+        event.preventDefault();
+      }, true);
     }
   
     function blockShortcuts() {
       window.addEventListener('keydown', function (e) {
-        if (
-          (e.metaKey && e.altKey && [73, 74, 67, 85].includes(e.keyCode)) ||
-          (e.metaKey && e.shiftKey && e.keyCode === 67) ||
-          (e.ctrlKey && e.shiftKey && [73, 74, 67].includes(e.keyCode)) ||
-          (e.ctrlKey && e.keyCode === 85) ||
-          e.keyCode === 123
-        ) {
+        const key = e.key.toLowerCase();
+  
+        const combo = [
+          e.metaKey && e.altKey && ['i', 'j', 'c', 'u'].includes(key),
+          e.metaKey && e.shiftKey && key === 'c',
+          e.ctrlKey && e.shiftKey && ['i', 'j', 'c'].includes(key),
+          e.key === 'F12',
+          e.ctrlKey && key === 'u'
+        ];
+  
+        if (combo.some(Boolean)) {
           e.preventDefault();
-          //activateForbidden();
         }
       });
     }
   
-    function preventDefaultAction(selector, eventType) {
-      document.addEventListener(eventType, function (e) {
-        e.preventDefault();
-      });
+    function blockTextCopy() {
+      document.addEventListener('copy', (e) => e.preventDefault());
     }
   
-    function disableTextSelection() {
-      document.addEventListener('selectstart', function (e) {
-        e.preventDefault();
-      });
+    function blockTextCut() {
+      document.addEventListener('cut', (e) => e.preventDefault());
     }
   
-    function disableMouseDown() {
-      document.addEventListener('mousedown', function (e) {
-        e.preventDefault();
+    function blockTextSelection() {
+      document.addEventListener('selectstart', (e) => e.preventDefault());
+    }
+  
+    function blockMouseDown() {
+      document.addEventListener('mousedown', (e) => e.preventDefault());
+    }
+  
+    function detectDevTools() {
+      // Chrome/Edge detection
+      const devtools = function () {};
+      devtools.toString = function () {
+        DevToolsOpened();
+        return '-';
+      };
+  
+      setInterval(() => {
+        console.profile(devtools);
+        console.profileEnd(devtools);
+        if (console.clear) {
+          console.clear();
+        }
+      }, 1000);
+  
+      // Firefox resize detection
+      if (navigator.userAgent.toLowerCase().includes('firefox')) {
+        window.onresize = function () {
+          if (
+            (window.outerHeight - window.innerHeight > 100) ||
+            (window.outerWidth - window.innerWidth > 100)
+          ) {
+            DevToolsOpened();
+          }
+        };
+      }
+  
+      // Firebug detection
+      if ((window.console && window.console.firebug) || console.assert(1) === '_firebugIgnore') {
+        DevToolsOpened();
+      }
+  
+      // Inspect element trap
+      let checkStatus;
+      const element = document.createElement('any');
+      Object.defineProperty(element, 'id', {
+        get: function () {
+          checkStatus = 'on';
+          return '';
+        }
       });
+  
+      setInterval(() => {
+        checkStatus = 'off';
+        console.log(element);
+        console.clear();
+  
+        if (checkStatus === 'on') {
+          DevToolsOpened();
+        }
+      }, 1000);
     }
   
     return {
-      init: function (options = {}) {
-        config = { ...config, ...options };
+      init(config) {
+        options = { ...options, ...config };
   
-        detectDevTools();
-  
-        if (config.disableContextMenu) {
-          preventDefaultAction(document, 'contextmenu');
-        }
-  
-        if (config.disableShorcuts) {
-          blockShortcuts();
-        }
-  
-        if (config.disableTextCopy) {
-          preventDefaultAction(document, 'copy');
-        }
-  
-        if (config.disableTextCut) {
-          preventDefaultAction(document, 'cut');
-        }
-  
-        if (config.disableTextSelection) {
-          disableTextSelection();
-        }
-  
-        if (config.disableMouseDown) {
-          disableMouseDown();
-        }
+        if (options.disableContextMenu) blockContextMenu();
+        if (options.disableShorcuts) blockShortcuts();
+        if (options.disableTextCopy) blockTextCopy();
+        if (options.disableTextCut) blockTextCut();
+        if (options.disableTextSelection) blockTextSelection();
+        if (options.disableMouseDown) blockMouseDown();
+        if (options.disableDevTools) detectDevTools();
       }
-    }
+    };
   })();
-  
   
