@@ -12,6 +12,8 @@
  * © 2025 Wahyu Primadi. All rights reserved.
  */
 
+// LOCKDOWN.js
+
 const lockdown = (function () {
     let config = {
       redirectUrl: '',
@@ -35,42 +37,16 @@ const lockdown = (function () {
     function detectDevTools() {
       if (!config.disableDevTools) return;
   
-      const element = new Image();
-      Object.defineProperty(element, 'id', {
-        get: function () {
+      setInterval(() => {
+        const threshold = 160; // typical devtools width/height
+        const isDevToolsOpen = (
+          window.outerWidth - window.innerWidth > threshold ||
+          window.outerHeight - window.innerHeight > threshold
+        );
+  
+        if (isDevToolsOpen) {
           activateForbidden();
         }
-      });
-  
-      setInterval(() => {
-        console.log(element);
-        console.clear();
-      }, 1000);
-  
-      // Resize detection for Firefox/Chrome/Edge
-      if (navigator.userAgent.toLowerCase().includes('firefox')) {
-        window.onresize = function () {
-          if ((window.outerHeight - window.innerHeight) > 100 || (window.outerWidth - window.innerWidth) > 100) {
-            activateForbidden();
-          }
-        }
-      }
-  
-      // Firebug detection
-      if (window.console && (window.console.firebug || console.table && /firebug/i.test(console.table()))) {
-        activateForbidden();
-      }
-  
-      // Profile detection (Chrome)
-      const devtools = function () { };
-      devtools.toString = function () {
-        activateForbidden();
-        return '-';
-      }
-      setInterval(() => {
-        console.profile(devtools);
-        console.profileEnd(devtools);
-        console.clear();
       }, 1000);
     }
   
@@ -84,7 +60,7 @@ const lockdown = (function () {
           e.keyCode === 123
         ) {
           e.preventDefault();
-          activateForbidden();
+          //activateForbidden();
         }
       });
     }
@@ -139,4 +115,5 @@ const lockdown = (function () {
       }
     }
   })();
+  
   

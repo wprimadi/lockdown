@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Example</title>
+    <script src="lockdown.js" type="text/javascript" defer></script>
+</head>
+<body>
+    <p>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis neque neque, laoreet vel dolor quis, sodales porttitor diam. Morbi nisi est, lobortis eget massa vitae, tincidunt ultrices tortor. Maecenas dui massa, vehicula eu mi ac, aliquet efficitur nunc. Mauris finibus turpis erat, et porttitor ex vulputate a. Aenean interdum porta purus, dictum imperdiet nunc varius et. Pellentesque nibh urna, tincidunt maximus dictum vel, viverra ac risus. Cras mollis ligula urna, sed rhoncus augue pretium vel. Proin vel convallis erat. Suspendisse egestas, mauris ut lacinia pulvinar, magna felis molestie tortor, in condimentum nisl velit quis augue. Pellentesque lorem velit, finibus ut lacinia in, pellentesque eget nisl. Curabitur vulputate sagittis blandit. Aliquam auctor erat sit amet lectus faucibus, in interdum est tempor. Suspendisse sit amet erat nisi.
+    </p>
+    <p>
+        Duis eget ipsum et velit pellentesque porta a eget eros. Quisque feugiat id mauris id pulvinar. Proin lobortis ultricies dui ut lacinia. Sed varius ultricies est quis dignissim. Mauris aliquet, velit volutpat gravida tincidunt, ipsum lacus gravida nisi, mattis placerat odio ante ac quam. Sed at ante dui. Aliquam metus ante, vulputate quis nisl sed, fringilla blandit justo. Quisque enim lectus, iaculis vitae velit sit amet, mollis ornare ex. Cras hendrerit, metus non dignissim faucibus, nulla leo lobortis neque, vitae tincidunt tortor nisl eget erat.
+    </p>
+    
+    <script type="text/javascript">
+        "use strict";
+
+        window.addEventListener('DOMContentLoaded', () => {
+            lockdown.init({
+                redirectUrl: 'https://www.google.com',
+                disableContextMenu: true,
+                disableShorcuts: true,
+                disableTextCopy: true,
+                disableTextCut: true,
+                disableTextSelection: true,
+                disableMouseDown: true, 
+                disableDevTools: true
+            });
+        });
+    </script>
+</body>
+</html>

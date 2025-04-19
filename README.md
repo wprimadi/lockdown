@@ -45,6 +45,8 @@ lockdown.init({
 
 All options are optional. If omitted, they will use the default values.
 
+---
+
 ## ⚙️ Configuration Options
 
 | Option                 | Type     | Default       | Description                                                              |
@@ -58,6 +60,8 @@ All options are optional. If omitted, they will use the default values.
 | `disableMouseDown`     | `bool`   | `true`        | Disable mouse down interaction.                                          |
 | `disableDevTools`      | `bool`   | `true`        | Enable/disable DevTools detection mechanism.                             |
 
+---
+
 ## 🔐 Use Case
 
 LOCKDOWN is perfect for:
@@ -66,9 +70,22 @@ LOCKDOWN is perfect for:
 - Public landing pages where copying or debugging is discouraged
 - Frontend-only applications requiring extra client-side security
 
+---
+
+## 🌐 Compatibility
+
+![Chrome](https://img.shields.io/badge/Chrome-135.0.7049.85-blue?logo=googlechrome)
+![Edge](https://img.shields.io/badge/Edge-135.0.3179.73-blue?logo=microsoftedge)
+![Firefox](https://img.shields.io/badge/Firefox-137.0.2-orange?logo=firefox)
+![Opera](https://img.shields.io/badge/Opera-117.0.5408.197-red?logo=opera)
+
+---
+
 ## ⚠️ Disclaimer
 
 This library only provides basic obfuscation and deterrence. It is not a foolproof security solution and should be used alongside proper backend validation and security best practices.
+
+---
 
 ## 📄 License
 
