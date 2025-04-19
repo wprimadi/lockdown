@@ -2,6 +2,12 @@
 
 **Log Obfuscation & Console Kill-switch with Devtools Override Warning Network**
 
+![License](https://img.shields.io/github/license/wprimadi/lockdown)
+![Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=wprimadi_lockdown&metric=alert_status) 
+[![BARRICADE CDN](https://data.jsdelivr.com/v1/package/gh/wprimadi/lockdown/badge)](https://www.jsdelivr.com/package/gh/wprimadi/lockdown)
+[![npm version](https://img.shields.io/npm/v/@wprimadi/lockdown.svg)](https://www.npmjs.com/package/@wprimadi/lockdown)
+[![npm downloads](https://img.shields.io/npm/dm/@wprimadi/lockdown.svg)](https://www.npmjs.com/package/@wprimadi/lockdown)
+
 **LOCKDOWN** is a lightweight JavaScript library designed to protect your website from unwanted user interactions such as opening DevTools, copying text, right-clicking, and more. This library helps you add an extra layer of front-end security in just a few lines of code.
 
 ---
@@ -28,18 +34,52 @@ You can include it directly in your HTML file:
 <script src="lockdown.js"></script>
 ```
 
+Or serve it via NPM/CDN:
+
+### CDN
+
+You can include B.A.R.R.I.C.A.D.E from a CDN:
+
+```html
+<script src="https://cdn.jsdelivr.net/gh/wprimadi/lockdown@v1.0.0/lockdown.min.js"></script>
+```
+
+Or the latest version:
+
+```html
+<script src="https://cdn.jsdelivr.net/gh/wprimadi/lockdown/lockdown.min.js"></script>
+```
+
+### NPM
+
+Install via NPM:
+
+```bash
+npm install @wprimadi/lockdown
+```
+
+Or use it from the CDN NPM package:
+
+```html
+<script src="https://cdn.jsdelivr.net/npm/@wprimadi/lockdown/lockdown.min.js"></script>
+```
+
+For more details, visit the [NPM page](https://www.npmjs.com/package/@wprimadi/lockdown).
+
 ### 2. Initialize
 
 ```javascript
-lockdown.init({
-  redirectUrl: '/access_denied',       // URL to redirect when DevTools is opened
-  disableContextMenu: true,            // Default: true
-  disableShorcuts: true,               // Default: true
-  disableTextCopy: true,               // Default: true
-  disableTextCut: true,                // Default: true
-  disableTextSelection: true,          // Default: true
-  disableMouseDown: true,              // Default: true
-  disableDevTools: true                // Default: true
+window.addEventListener('DOMContentLoaded', () => {
+    lockdown.init({
+        redirectUrl: '/access_denied',       // URL to redirect when DevTools is opened
+        disableContextMenu: true,            // Default: true
+        disableShorcuts: true,               // Default: true
+        disableTextCopy: true,               // Default: true
+        disableTextCut: true,                // Default: true
+        disableTextSelection: true,          // Default: true
+        disableMouseDown: true,              // Default: true
+        disableDevTools: true                // Default: true
+    });
 });
 ```
 

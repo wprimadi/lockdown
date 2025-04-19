@@ -1,0 +1,37 @@
+{
+  "name": "@wprimadi/lockdown",
+  "version": "1.0.0",
+  "description": "LOCKDOWN (Log Obfuscation & Console Kill-switch with Devtools Override Warning Network) - Lightweight JavaScript library to secure your website by blocking DevTools access, disabling context menu, shortcuts, text copy/cut/select, and more. Built for front-end security hardening.",
+  "main": "lockdown.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wprimadi/lockdown.git"
+  },
+  "keywords": [
+    "lockdown",
+    "frontend-security",
+    "anti-devtools",
+    "disable-context-menu",
+    "disable-copy",
+    "disable-selection",
+    "block-devtools",
+    "prevent-inspection",
+    "javascript",
+    "library",
+    "browser-protection",
+    "content-protection",
+    "disable-shortcuts",
+    "disable-text-cut",
+    "disable-mouse-events",
+    "redirect-on-devtools"
+  ],
+  "author": "Wahyu Primadi <saya@wahyuprimadi.com> (https://wahyuprimadi.com)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/wprimadi/lockdown/issues"
+  },
+  "homepage": "https://github.com/wprimadi/lockdown#readme"
+}
